@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -25,6 +26,10 @@ public class ApplicationUser implements UserDetails {
     private Date dateOfBirth;
 
     private String bio;
+
+
+//    @OneToMany(mappedBy = "applicationUser")
+//    private List<Post> posts;
 
     public ApplicationUser() {
     }

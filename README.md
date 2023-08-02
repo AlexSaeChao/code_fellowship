@@ -47,3 +47,4 @@ Code Fellowship is a web application that allows users to sign up, log in, and l
 
 ## Contributing
 I got help formatting this README.md file from ChatGPT.
+Image by <a href="https://www.freepik.com/free-vector/fun-collection-silhouette-avatars_1292975.htm#query=profile%20placeholder&position=4&from_view=keyword&track=ais">Freepik</a>

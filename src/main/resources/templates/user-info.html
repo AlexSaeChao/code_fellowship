@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+</head>
+<body>
+<h3 th:if="${BrowsingUserUsername != null}" th:text="${'Current user: ' + BrowsingUserUsername + ' with first name of ' + BrowsingFirstName + ', with last name of ' + BrowsingLastName}"></h3>
+
+<h1 th:text="${'User info for username: ' + applicationUserUsername}"></h1>
+
+<label for="username">Username</label>
+<div th:text="${applicationUserUsername}" type="text" name="username" id="username"></div>
+
+<label for="lastname">Lastname</label> <!-- Corrected variable name -->
+<div th:text="${applicationUserLastName}" type="text" name="lastname" id="lastname"></div>
+
+
+<div th:text="${'testDate: ' + #temporals.format(testDate, 'yyyy-MM-dd HH:mm:ss')}"></div>
+</body>
+</html>

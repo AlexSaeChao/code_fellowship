@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>My Profile</title>
+</head>
+<body>
+<h3 th:if="${username != null}" th:text="${'Current user: ' + username + ' with first name of ' + firstName + ', with last name of ' + lastName}"></h3>
+<h1>Welcome to your profile!</h1>
+<!--<div th:replace="/fragments/nav-header :: profile-info"></div>-->
+
+</body>
+</html>
