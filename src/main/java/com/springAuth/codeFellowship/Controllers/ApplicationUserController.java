@@ -1,7 +1,9 @@
 package com.springAuth.codeFellowship.Controllers;
 
+import com.springAuth.codeFellowship.Models.Post;
 import com.springAuth.codeFellowship.Models.ApplicationUser;
 import com.springAuth.codeFellowship.Repos.ApplicationUserRepository;
+import com.springAuth.codeFellowship.Repos.PostRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +13,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class ApplicationUserController {
 
     @Autowired
     private ApplicationUserRepository applicationUserRepository;
+
+    @Autowired
+    private PostRepository postRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -49,8 +56,32 @@ public class ApplicationUserController {
             model.addAttribute("FirstName", applicationUser.getFirstName());
             model.addAttribute("LastName", applicationUser.getLastName());
         }
+
+
+
         return "index.html";
     }
+
+
+
+    @PostMapping("/create-post")
+    public RedirectView createPost(Principal principal, String body) {
+        if (principal != null) {
+            String username = principal.getName();
+            ApplicationUser applicationUser = applicationUserRepository.findByUsername(username);
+
+            Post post = new Post(body, applicationUser);
+            post.setBody(body);
+            post.setCreatedAt(LocalDateTime.now());
+            post.setApplicationUser(applicationUser);
+            postRepository.save(post);
+        }
+        Long userId = applicationUserRepository.findByUsername(principal.getName()).getId();
+
+        return new RedirectView("/users/" + userId);
+    }
+
+
 
     @GetMapping("/test")
     public String getTestPage(Principal p, Model m) {
@@ -81,9 +112,14 @@ public class ApplicationUserController {
         }
         ApplicationUser applicationUser = applicationUserRepository.findById(id).orElseThrow();
         m.addAttribute("applicationUserUsername", applicationUser.getUsername());
+        m.addAttribute("applicationUserFirstName", applicationUser.getFirstName());
         m.addAttribute("applicationUserLastName", applicationUser.getLastName());
+        m.addAttribute("applicationUserId", applicationUser.getId());
 
         m.addAttribute("testDate", LocalDateTime.now());
+
+        List<Post> posts = applicationUser.getPosts(); // Fetch the posts associated with the applicationUser
+        m.addAttribute("posts", posts);
         
         return "/user-info.html";
     }
@@ -112,5 +148,15 @@ public class ApplicationUserController {
             e.printStackTrace();
         }
     }
-
+    @PutMapping("/users/{id}")
+    public RedirectView editUserInfo(Principal p, @PathVariable Long id, String username, String firstName, String lastName) {
+        if (p != null) {
+            ApplicationUser applicationUser = applicationUserRepository.findById(id).orElseThrow();
+            applicationUser.setUsername(username);
+            applicationUser.setFirstName(firstName);
+            applicationUser.setLastName(lastName);
+            applicationUserRepository.save(applicationUser);
+        }
+        return new RedirectView("/users/" + id);
+    }
 }

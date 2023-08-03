@@ -1,9 +1,15 @@
 package com.springAuth.codeFellowship.Models;
 
+import com.springAuth.codeFellowship.Repos.ApplicationUserRepository;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -28,8 +34,8 @@ public class ApplicationUser implements UserDetails {
     private String bio;
 
 
-//    @OneToMany(mappedBy = "applicationUser")
-//    private List<Post> posts;
+    @OneToMany(mappedBy = "applicationUser")
+    private List<Post> posts;
 
     public ApplicationUser() {
     }
@@ -123,17 +129,14 @@ public class ApplicationUser implements UserDetails {
         this.bio = bio;
     }
 
-    @Override
-    public String toString() {
-        return "ApplicationUser{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", bio='" + bio + '\'' +
-                '}';
+    public List<Post> getPosts() {
+        return posts;
     }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+
 }
 
