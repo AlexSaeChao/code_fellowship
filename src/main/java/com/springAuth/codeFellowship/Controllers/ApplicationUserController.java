@@ -45,6 +45,13 @@ public class ApplicationUserController {
         return "signup.html";
     }
 
+    @GetMapping("/users")
+    public String getAllUsers(Model model) {
+        List<ApplicationUser> users = applicationUserRepository.findAll();
+        model.addAttribute("users", users);
+        return "AppUsers.html";
+    }
+
     @GetMapping("/")
     public String getIndexPage(Model model, Principal principal) {
         if (principal != null) {

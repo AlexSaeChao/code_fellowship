@@ -4,56 +4,59 @@
     <meta charset="UTF-8">
     <title>User Profile</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-    <div th:replace="fragments/header :: h3"></div>
 </head>
 <body>
+<div th:replace="fragments/header :: h3"></div>
+<div th:replace="fragments/header :: nav"></div>
+
 <main class="container">
 
-<h3></h3>
+    <h3></h3>
+    <nav></nav>
+    <h1 th:text="${'User info for user id: ' + applicationUserId}"></h1>
 
-<h1 th:text="${'User info for user id: ' + applicationUserId}"></h1>
+    <form th:action="${'/users/' + applicationUserId}" th:method="PUT">
+        <label for="username">Username</label>
+        <input th:value="${applicationUserUsername}" type="text" name="username"
+               th:disabled="${!BrowsingUserUsername.equals(applicationUserUsername)}">
+        <label for="firstname">First Name</label>
+        <input th:value="${applicationUserFirstName}" type="text" name="firstName"
+               th:disabled="${!BrowsingUserUsername.equals(applicationUserUsername)}">
+        <label for="lastname">Last Name</label>
+        <input th:value="${applicationUserLastName}" type="text" name="lastName"
+               th:disabled="${!BrowsingUserUsername.equals(applicationUserUsername)}">
+        <input type="submit" value="Edit User Info"
+               th:hidden="${!BrowsingUserUsername.equals(applicationUserUsername)}">
+    </form>
 
-<form th:action="${'/users/' + applicationUserId}" th:method="PUT">
     <label for="username">Username</label>
-    <input th:value="${applicationUserUsername}" type="text" name="username"
-           th:disabled="${!BrowsingUserUsername.equals(applicationUserUsername)}">
-    <label for="firstname">First Name</label>
-    <input th:value="${applicationUserFirstName}" type="text" name="firstName"
-           th:disabled="${!BrowsingUserUsername.equals(applicationUserUsername)}">
+    <div th:text="${applicationUserUsername}" type="text" name="username" id="username"></div>
+
     <label for="lastname">Last Name</label>
-    <input th:value="${applicationUserLastName}" type="text" name="lastName"
-           th:disabled="${!BrowsingUserUsername.equals(applicationUserUsername)}">
-    <input type="submit" value="Edit User Info" th:hidden="${!BrowsingUserUsername.equals(applicationUserUsername)}">
-</form>
+    <div th:text="${applicationUserLastName}" type="text" name="lastname" id="lastname"></div>
 
-<label for="username">Username</label>
-<div th:text="${applicationUserUsername}" type="text" name="username" id="username"></div>
+    <label for="firstname">First Name</label>
+    <div th:text="${applicationUserFirstName}" type="text" name="firstname" id="firstname"></div>
 
-<label for="lastname">Last Name</label>
-<div th:text="${applicationUserLastName}" type="text" name="lastname" id="lastname"></div>
-
-<label for="firstname">First Name</label>
-<div th:text="${applicationUserFirstName}" type="text" name="firstname" id="firstname"></div>
-
-<div th:text="${'testDate: ' + #temporals.format(testDate, 'yyyy-MM-dd HH:mm:ss')}"></div>
+    <div th:text="${'testDate: ' + #temporals.format(testDate, 'yyyy-MM-dd HH:mm:ss')}"></div>
 
     <br>
-<form action="/create-post" method="POST" th:hidden="${!BrowsingUserUsername.equals(applicationUserUsername)}">
+    <form action="/create-post" method="POST" th:hidden="${!BrowsingUserUsername.equals(applicationUserUsername)}">
 
-    <label for="body">Wanna write a post?</label>
-    <textarea name="body" id="body" rows="4" cols="50"></textarea>
+        <label for="body">Wanna write a post?</label>
+        <textarea name="body" id="body" rows="4" cols="50"></textarea>
 
-    <input type="submit" value="Create Post">
-</form>
+        <input type="submit" value="Create Post">
+    </form>
 
-<div th:each="post : ${posts}">
-    <div>
-        <h2 th:text="${post.applicationUser.username}"></h2>
-        <p th:text="${post.body}"></p>
-        <p th:text="${'Posted at: ' + #temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></p>
+    <div th:each="post : ${posts}">
+        <div>
+            <h2 th:text="${post.applicationUser.username}"></h2>
+            <p th:text="${post.body}"></p>
+            <p th:text="${'Posted at: ' + #temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></p>
+        </div>
+        <hr>
     </div>
-    <hr>
-</div>
 </main>
 </body>
 </html>

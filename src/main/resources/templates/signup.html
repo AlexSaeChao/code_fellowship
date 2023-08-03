@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,8 +10,10 @@
 
 </head>
 <body>
-<main class="container">
 
+<div th:replace="fragments/header :: nav"></div>
+<main class="container">
+    <nav></nav>
     <h1>Sign Up!</h1>
     <form action="/signup" method="POST">
         <label for="username">Username</label>
