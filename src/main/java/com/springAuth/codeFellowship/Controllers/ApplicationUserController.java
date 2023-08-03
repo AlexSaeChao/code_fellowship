@@ -35,6 +35,8 @@ public class ApplicationUserController {
     @Autowired
     private HttpServletRequest request;
 
+    // Get Mapping Methods
+
     @GetMapping("/login")
     public String getLoginPage() {
         return "login.html";
@@ -49,7 +51,7 @@ public class ApplicationUserController {
     public String getAllUsers(Model model) {
         List<ApplicationUser> users = applicationUserRepository.findAll();
         model.addAttribute("users", users);
-        return "AppUsers.html";
+        return "showallusers.html";
     }
 
     @GetMapping("/")
@@ -62,37 +64,10 @@ public class ApplicationUserController {
             model.addAttribute("FirstName", applicationUser.getFirstName());
             model.addAttribute("LastName", applicationUser.getLastName());
         }
-
-//        throw new ResourceNotFoundException("It's a 404");
+        // throw new ResourceNotFoundException("It's a 404");
 
         return "index.html";
     }
-
-//    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-//    public class ResourceNotFoundException extends RuntimeException {
-//        ResourceNotFoundException(String message) {
-//            super(message);
-//        }
-//    }
-
-    @PostMapping("/create-post")
-    public RedirectView createPost(Principal principal, String body) {
-        if (principal != null) {
-            String username = principal.getName();
-            ApplicationUser applicationUser = applicationUserRepository.findByUsername(username);
-
-            Post post = new Post(body, applicationUser);
-            post.setBody(body);
-            post.setCreatedAt(LocalDateTime.now());
-            post.setApplicationUser(applicationUser);
-            postRepository.save(post);
-        }
-        Long userId = applicationUserRepository.findByUsername(principal.getName()).getId();
-
-        return new RedirectView("/users/" + userId);
-    }
-
-
 
     @GetMapping("/test")
     public String getTestPage(Principal p, Model m) {
@@ -131,10 +106,28 @@ public class ApplicationUserController {
 
         List<Post> posts = applicationUser.getPosts(); // Fetch the posts associated with the applicationUser
         m.addAttribute("posts", posts);
-        
+
         return "/user-info.html";
     }
 
+    // Post Mapping Methods
+
+    @PostMapping("/create-post")
+    public RedirectView createPost(Principal principal, String body) {
+        if (principal != null) {
+            String username = principal.getName();
+            ApplicationUser applicationUser = applicationUserRepository.findByUsername(username);
+
+            Post post = new Post(body, applicationUser);
+            post.setBody(body);
+            post.setCreatedAt(LocalDateTime.now());
+            post.setApplicationUser(applicationUser);
+            postRepository.save(post);
+        }
+        Long userId = applicationUserRepository.findByUsername(principal.getName()).getId();
+
+        return new RedirectView("/users/" + userId);
+    }
 
     @PostMapping("/signup")
     public RedirectView postSignup(String username, String password, String firstName, String lastName, Date dateOfBirth, String bio) {
@@ -151,14 +144,8 @@ public class ApplicationUserController {
         return new RedirectView("/login");
     }
 
-    public void authWithHttpServletRequest(String username, String password) {
-        try {
-            request.login(username, password);
-        } catch (ServletException e) {
-            System.out.println("Error while logging in.");
-            e.printStackTrace();
-        }
-    }
+    // Put Mapping Method
+
     @PutMapping("/users/{id}")
     public RedirectView editUserInfo(Principal p, @PathVariable Long id, String username, String firstName, String lastName) {
         if (p != null) {
@@ -169,5 +156,16 @@ public class ApplicationUserController {
             applicationUserRepository.save(applicationUser);
         }
         return new RedirectView("/users/" + id);
+    }
+
+    // Other Helper Methods
+
+    public void authWithHttpServletRequest(String username, String password) {
+        try {
+            request.login(username, password);
+        } catch (ServletException e) {
+            System.out.println("Error while logging in.");
+            e.printStackTrace();
+        }
     }
 }
