@@ -7,13 +7,12 @@ import com.springAuth.codeFellowship.Repos.PostRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
@@ -57,12 +56,17 @@ public class ApplicationUserController {
             model.addAttribute("LastName", applicationUser.getLastName());
         }
 
-
+//        throw new ResourceNotFoundException("It's a 404");
 
         return "index.html";
     }
 
-
+//    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+//    public class ResourceNotFoundException extends RuntimeException {
+//        ResourceNotFoundException(String message) {
+//            super(message);
+//        }
+//    }
 
     @PostMapping("/create-post")
     public RedirectView createPost(Principal principal, String body) {
