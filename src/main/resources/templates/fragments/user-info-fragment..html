@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Info Fragment</title>
+</head>
+<body>
+<h3 th:if="${BrowsingUserUsername != null}"
+    th:text="${'Current user: ' + BrowsingUserUsername + ' with name of ' + BrowsingFirstName +  BrowsingLastName}"></h3>
+
+<h1 th:text="${'User info for user id: ' + applicationUserId}"></h1>
+</body>
+</html>

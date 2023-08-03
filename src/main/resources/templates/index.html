@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-<!--    <div th:include="fragments/header :: userInfo"></div>-->
 </head>
 <body>
+<div th:replace="fragments/header :: h3"></div>
+<div th:replace="fragments/header :: nav"></div>
 <main class="container">
-<!--    <h3 th:fragment="userInfo"></h3>-->
 
+    <nav></nav>
     <h1>Welcome to the Code Fellowship, my precious.</h1>
 
     <a th:if="${username == null}" href="/login">Log In</a>
