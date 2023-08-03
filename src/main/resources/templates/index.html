@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <div th:include="fragments/header :: h3"></div>
 </head>
 <body>
 <main class="container">
-
-    <h3 th:if="${username != null}" th:text="${'Current user: ' + username + ' with first name of ' + FirstName + ', with last name of ' + LastName}"></h3>
+<h3>YOUR NAME HERE</h3>
 
     <h1>Welcome to the Code Fellowship, my precious.</h1>
 
@@ -17,10 +17,6 @@
     <a th:if="${username == null}" href="/signup">Or Sign Up</a>
     <br>
     <a th:if="${username != null}" href="/logout">Log Out</a>
-
-
-
-
 
 
 </main>
