@@ -29,22 +29,39 @@ Code Fellowship is a web application that allows users to sign up, log in, and l
 
 ### Home Page
 - The home page displays a welcome message to all users.
-- If a user is logged in, their username will be shown in the welcome message.
 
-### Post Creation and Interaction
-- Logged-in users can log out right now and can verify they are logged in by displaying their name above the header.
-- Only authenticated users can log in and only see their name if they have registered and have signed in.
+### User Profile
+- Each user has a profile page where their information is displayed, including their username, first name, last name, date of birth, and bio.
+- Users can view their own profile information.
+- Users can view other users' profiles.
 
-### Log Out
-- Users can log out from the application.
+### Post Creation
+- Logged-in users can create posts and view posts by other users.
+
+### Follow and Unfollow Users
+- Users can follow other users to see their posts in their feed.
+- Users can unfollow users they are currently following.
+
+### Security
+- The application uses Spring Security to handle user authentication and authorization.
+- Only authenticated users can access certain pages and perform specific actions.
+
+### Reusable Templates
+- The application uses Thymeleaf fragments to create reusable templates for its information, ensuring consistent design across multiple pages.
 
 ## Current Status
 
 - User Registration and Login: ✅ Completed and tested.
 - Home Page: ✅ Completed and tested.
-- Post Creation and Interaction: ✅ Completed and tested.
-- Log Out: ✅ Completed and tested.
+- User Profile: ✅ Completed and tested.
+- Post Creation: ✅ Completed and tested.
+- Error Handling Page: Attempted
+- Security: ✅ Completed and tested.
+- Reusable Templates: ✅ Completed and tested.
 
 ## Contributing
+Contributions to the project are welcome! Feel free to open issues and submit pull requests to help improve the application.
+
+## Credits
 I got help formatting this README.md file from ChatGPT.
-Image by <a href="https://www.freepik.com/free-vector/fun-collection-silhouette-avatars_1292975.htm#query=profile%20placeholder&position=4&from_view=keyword&track=ais">Freepik</a>
+Image by [Freepik](https://www.freepik.com/free-vector/fun-collection-silhouette-avatars_1292975.htm#query=profile%20placeholder&position=4&from_view=keyword&track=ais)
