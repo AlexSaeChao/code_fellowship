@@ -29,14 +29,15 @@
 <label for="username">Username</label>
 <div th:text="${applicationUserUsername}" type="text" name="username" id="username"></div>
 
-<label for="lastname">Last Name</label> <!-- Corrected variable name -->
+<label for="lastname">Last Name</label>
 <div th:text="${applicationUserLastName}" type="text" name="lastname" id="lastname"></div>
 
-<label for="firstname">First Name</label> <!-- Corrected variable name -->
+<label for="firstname">First Name</label>
 <div th:text="${applicationUserFirstName}" type="text" name="firstname" id="firstname"></div>
 
 <div th:text="${'testDate: ' + #temporals.format(testDate, 'yyyy-MM-dd HH:mm:ss')}"></div>
 
+    <br>
 <form action="/create-post" method="POST" th:hidden="${!BrowsingUserUsername.equals(applicationUserUsername)}">
 
     <label for="body">Wanna write a post?</label>
