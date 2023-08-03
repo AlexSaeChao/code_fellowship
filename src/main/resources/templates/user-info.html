@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <div th:replace="fragments/header :: h3"></div>
 </head>
 <body>
-<h3 th:if="${BrowsingUserUsername != null}"
-    th:text="${'Current user: ' + BrowsingUserUsername + ' with first name of ' + BrowsingFirstName + ', with last name of ' + BrowsingLastName}"></h3>
+<main class="container">
+
+<h3></h3>
 
 <h1 th:text="${'User info for user id: ' + applicationUserId}"></h1>
 
@@ -34,7 +37,7 @@
 
 <div th:text="${'testDate: ' + #temporals.format(testDate, 'yyyy-MM-dd HH:mm:ss')}"></div>
 
-<form action="/create-post" method="POST">
+<form action="/create-post" method="POST" th:hidden="${!BrowsingUserUsername.equals(applicationUserUsername)}">
 
     <label for="body">Wanna write a post?</label>
     <textarea name="body" id="body" rows="4" cols="50"></textarea>
@@ -50,5 +53,6 @@
     </div>
     <hr>
 </div>
+</main>
 </body>
 </html>
