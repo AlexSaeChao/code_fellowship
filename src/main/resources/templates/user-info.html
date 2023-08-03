@@ -5,17 +5,50 @@
     <title>User Profile</title>
 </head>
 <body>
-<h3 th:if="${BrowsingUserUsername != null}" th:text="${'Current user: ' + BrowsingUserUsername + ' with first name of ' + BrowsingFirstName + ', with last name of ' + BrowsingLastName}"></h3>
+<h3 th:if="${BrowsingUserUsername != null}"
+    th:text="${'Current user: ' + BrowsingUserUsername + ' with first name of ' + BrowsingFirstName + ', with last name of ' + BrowsingLastName}"></h3>
 
-<h1 th:text="${'User info for username: ' + applicationUserUsername}"></h1>
+<h1 th:text="${'User info for user id: ' + applicationUserId}"></h1>
+
+<form th:action="${'/users/' + applicationUserId}" th:method="PUT">
+    <label for="username">Username</label>
+    <input th:value="${applicationUserUsername}" type="text" name="username"
+           th:disabled="${!BrowsingUserUsername.equals(applicationUserUsername)}">
+    <label for="firstname">First Name</label>
+    <input th:value="${applicationUserFirstName}" type="text" name="firstName"
+           th:disabled="${!BrowsingUserUsername.equals(applicationUserUsername)}">
+    <label for="lastname">Last Name</label>
+    <input th:value="${applicationUserLastName}" type="text" name="lastName"
+           th:disabled="${!BrowsingUserUsername.equals(applicationUserUsername)}">
+    <input type="submit" value="Edit User Info" th:hidden="${!BrowsingUserUsername.equals(applicationUserUsername)}">
+</form>
 
 <label for="username">Username</label>
 <div th:text="${applicationUserUsername}" type="text" name="username" id="username"></div>
 
-<label for="lastname">Lastname</label> <!-- Corrected variable name -->
+<label for="lastname">Last Name</label> <!-- Corrected variable name -->
 <div th:text="${applicationUserLastName}" type="text" name="lastname" id="lastname"></div>
 
+<label for="firstname">First Name</label> <!-- Corrected variable name -->
+<div th:text="${applicationUserFirstName}" type="text" name="firstname" id="firstname"></div>
 
 <div th:text="${'testDate: ' + #temporals.format(testDate, 'yyyy-MM-dd HH:mm:ss')}"></div>
+
+<form action="/create-post" method="POST">
+
+    <label for="body">Wanna write a post?</label>
+    <textarea name="body" id="body" rows="4" cols="50"></textarea>
+
+    <input type="submit" value="Create Post">
+</form>
+
+<div th:each="post : ${posts}">
+    <div>
+        <h2 th:text="${post.applicationUser.username}"></h2>
+        <p th:text="${post.body}"></p>
+        <p th:text="${'Posted at: ' + #temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></p>
+    </div>
+    <hr>
+</div>
 </body>
 </html>
